@@ -7,7 +7,7 @@ import "croppie/croppie.css";
 import Croppie = require("croppie");
 import { UrlHelper } from "./UrlHelper";
 
-class ImageCrop extends WidgetBase {
+class MirrorStrings extends WidgetBase {
 
     // Parameters configured in modeler
     widthOfViewPort: number;
@@ -157,7 +157,7 @@ class ImageCrop extends WidgetBase {
 }
 
 // tslint:disable : only-arrow-functions
-dojoDeclare("org.flockofbirds.widget.cropimage.CropImage", [ WidgetBase ], function(Source: any) {
+dojoDeclare("MirrorStrings.widget.MirrorStrings", [ WidgetBase ], function(Source: any) {
     const result: any = {};
     for (const i in Source.prototype) {
         if (i !== "constructor" && Source.prototype.hasOwnProperty(i)) {
@@ -165,4 +165,4 @@ dojoDeclare("org.flockofbirds.widget.cropimage.CropImage", [ WidgetBase ], funct
         }
     }
     return result;
-}(ImageCrop));
+}(MirrorStrings));

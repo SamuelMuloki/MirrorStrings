@@ -30,7 +30,7 @@ module.exports = {
         ], {
             copyUnmodified: true
         }),
-        new ExtractTextPlugin("./src/org/flockofbirds/widget/MirrorStrings/ui/MirrorStrings.css"),
+        new ExtractTextPlugin("./src/org/flockofbirds/widget/cropimage/ui/CropImage.css"),
         new webpack.LoaderOptionsPlugin({
             debug: true
         })

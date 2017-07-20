@@ -29,6 +29,17 @@
     "tslint-eslint-rules": "^3.4.0",
     "typescript": "^2.0.3",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.5.1"
+    "webpack-dev-server": "^2.4.1"
+  },
+  "engines": {
+    "node": ">=5"
+  },
+  "generatorVersion": "2.2.3",
+  "paths": {
+    "testProjectFolder": "./test/",
+    "testProjectFileName": "Test.mpr"
+  },
+  "scripts": {
+    "build": "grunt build"
   }
 }

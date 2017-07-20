@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<widget id="MirrorStrings.widget.MirrorStrings" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
+    <name>MirrorStrings</name>
+    <description>The description of this widget.</description>
+    <icon />
+    <properties>
+        <property key="messageString" type="string" required="false" defaultValue="">
+            <caption>Message</caption>
+            <category>Appearance</category>
+            <description>The message visible within the widget</description>
+        </property>
+        <property key="dataAttribute" type="attribute" entityProperty="reverseEntity" required="true">
+           <caption>Tag attribute</caption>
+           <category>Data source</category>
+           <description>Handles tag text input</description>
+           <attributeTypes>
+               <attributeType name="String" />
+           </attributeTypes>
+        </property>
+        <property key="reverseEntity" type="entity" required="false">
+           <caption>Reverse object</caption>
+           <category>Data source</category>
+           <description>Reverse Entity</description>
+        </property>
+        <property key="mfToExecute" type="microflow" required="true" defaultValue="">
+            <caption>Microflow</caption>
+            <category>Behavior</category>
+            <description>The microflow to execute on click.</description>
+            <returnType type="Boolean" />
+        </property>
+    </properties>
+</widget>

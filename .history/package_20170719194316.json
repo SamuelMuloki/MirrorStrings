@@ -3,9 +3,12 @@
   "widgetName": "MirrorStrings",
   "version": "0.1.0",
   "description": "A fast and easy to reverse Strings",
-  "author": "Muloki Samuel, Freedom Gemmar",
+  "author": "",
   "copyright": "Flock of Birds",
   "private": true,
+  "dependencies": {
+    "croppie": "^2.4.1"
+  },
   "devDependencies": {
     "@types/big.js": "0.0.31",
     "@types/dojo": "^1.9.35",
@@ -29,6 +32,21 @@
     "tslint-eslint-rules": "^3.4.0",
     "typescript": "^2.0.3",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.5.1"
+    "webpack-dev-server": "^2.4.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/andries-smit/croppie"
+  },
+   "engines": {
+    "node": ">=5"
+  },
+  "generatorVersion": "2.2.3",
+  "paths": {
+    "testProjectFolder": "./test/",
+    "testProjectFileName": "Test.mpr"
+  },
+  "scripts": {
+    "build": "grunt build"
   }
 }

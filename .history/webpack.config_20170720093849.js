@@ -6,7 +6,7 @@ module.exports = {
     entry: "./src/widget/MirrorStrings.ts",
     output: {
         path: __dirname + "/dist/tmp",
-        filename: "src/widget/MirrorStrings.js",
+        filename: "src/org/flockofbirds/widget/MirrorStrings/MirrorStrings.js",
         libraryTarget: "umd"
     },
     resolve: {

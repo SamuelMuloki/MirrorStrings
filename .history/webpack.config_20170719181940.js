@@ -3,7 +3,7 @@ var CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-    entry: "./src/widget/MirrorStrings.ts",
+    entry: "./src/CropImage.ts",
     output: {
         path: __dirname + "/dist/tmp",
         filename: "src/widget/MirrorStrings.js",
@@ -30,7 +30,7 @@ module.exports = {
         ], {
             copyUnmodified: true
         }),
-        new ExtractTextPlugin("./src/org/flockofbirds/widget/MirrorStrings/ui/MirrorStrings.css"),
+        new ExtractTextPlugin("./src/org/flockofbirds/widget/cropimage/ui/CropImage.css"),
         new webpack.LoaderOptionsPlugin({
             debug: true
         })
