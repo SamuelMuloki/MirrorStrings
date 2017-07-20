@@ -14,28 +14,28 @@ class MirrorStrings extends WidgetBase {
     private contextObj: mendix.lib.MxObject;
     private message: string;
     private textString: string;
+    private msg: string;
 
     postCreate() {
-        this.setupEvents();
+        console.log("Your program has executed postCreate");
     }
 
     update(object: mendix.lib.MxObject, callback?: () => void) {
         this.contextObj = object;
-        //this.resetSubscriptions();
+        this.resetSubscriptions();
         this.updateRendering();
-
         if (callback) {
             callback();
         }
     }
 
-    uninitialize(): boolean {
+    uninitialise(): boolean {
         return true;
     }
 
     private setupEvents() {
         if (this.mfToExecute !== "") {
-            //this.execMf(this.mfToExecute, this.contextObj.getGuid());
+            // this.execMf(this.mfToExecute, this.contextObj.getGuid());
         }
     }
 
@@ -43,10 +43,14 @@ class MirrorStrings extends WidgetBase {
         domConstruct.create("input", {
             class: "form-control",
             type: "text",
-            value: "Place some Text Here"
+            value: "Place Some text here"
         }, this.domNode).addEventListener("mouseleave", () => {
-            this.setupEvents();
-        })
+            // this.setupEvents();
+        });
+
+        domConstruct.create("span", {
+            value: this.reverseString("sam")
+        }, this.domNode);
 
         domConstruct.create("input", {
             class: "form-control btn-default",
@@ -54,7 +58,11 @@ class MirrorStrings extends WidgetBase {
             value: "Post"
         }, this.domNode).addEventListener("click", () => {
             this.createTag();
-        })
+        });
+    }
+
+    private reverseString(str: string) {
+        return str.split("").reverse().join("");
     }
 
     private createTag() {
@@ -62,7 +70,7 @@ class MirrorStrings extends WidgetBase {
         // let txtstr = this.textString
         mx.data.create({
             entity: this.reverseEntity,
-            callback: this.saveTag, 
+            callback: this.saveTag,
             // function (obj: mendix.lib.MxObject) {
             //     obj.set(dataatttr, txtstr)
             //     this.saveTag(obj)
@@ -90,7 +98,8 @@ class MirrorStrings extends WidgetBase {
 
     private updateRendering() {
         if (this.contextObj !== null) {
-
+            this.msg = this.contextObj.get(this.dataAttribute) as string;
+            this.TextInput();
         }
     }
 
@@ -113,11 +122,19 @@ class MirrorStrings extends WidgetBase {
             }, this);
         }
     }
+
+    private resetSubscriptions() {
+        this.unsubscribeAll();
+        if (this.contextObj) {
+            this.subscribe({
+                callback: () => this.updateRendering(),
+                guid: this.contextObj.getGuid()
+            });
+        }
+    }
 }
 
-
-// tslint:disable : only-arrow-functions
-dojoDeclare("MirrorStrings.widget.MirrorStrings", [WidgetBase], function (Source: any) {
+dojoDeclare("widget.MirrorStrings", [WidgetBase], function (Source: any) {
     const result: any = {};
     for (const i in Source.prototype) {
         if (i !== "constructor" && Source.prototype.hasOwnProperty(i)) {
