@@ -3,6 +3,7 @@ import * as domConstruct from "dojo/dom-construct";
 import * as WidgetBase from "mxui/widget/_WidgetBase";
 import * as dojoClass from "dojo/dom-class";
 import * as dojoStyle from "dojo/dom-style";
+import * as dom from "dojo/dom";
 
 class MirrorStrings extends WidgetBase {
 
@@ -30,25 +31,16 @@ class MirrorStrings extends WidgetBase {
         }
     }
 
-    uninitialise(): boolean {
-        console.log("uninitialise")
-        domConstruct.destroy(this.domNode);
-        return true;
-    }
-
-    private setupEvents() {
-        if (this.mfToExecute !== "") {
-            // this.execMf(this.mfToExecute, this.contextObj.getGuid(), this.callb);
-        }
-    }
-
     private TextInput() {
+        domConstruct.empty(this.domNode);
         domConstruct.create("input", {
             class: "form-control",
             type: "Place Some text here",
-            value: ""
+            id: "text_node"
         }, this.domNode).addEventListener("mouseleave", () => {
-            // this.setupEvents();
+            if (this.mfToExecute) {
+                this.execMf(this.mfToExecute, this.contextObj.getGuid());
+            }
         });
 
         domConstruct.create("input", {
@@ -71,10 +63,11 @@ class MirrorStrings extends WidgetBase {
     }
 
     private createTag() {
+        var refnode = dom.byId("text_node");
         mx.data.create({
             entity: this.reverseEntity,
             callback: (obj: mendix.lib.MxObject) => {
-                obj.set(this.dataAttribute, this.textString);
+                obj.set(this.dataAttribute, refnode.value);
                 this.saveTag(obj);
                 console.log("Object created on server");
             },
@@ -106,8 +99,7 @@ class MirrorStrings extends WidgetBase {
         }
     }
 
-    private execMf(mf: string, guid: string, cb: () => void) {
-        // logger.debug(this.id + "._execMf");
+    private execMf(mf: string, guid: string, cb?: (obj: mendix.lib.MxObject) => void) {
         if (mf && guid) {
             mx.ui.action(mf, {
                 params: {
@@ -116,7 +108,7 @@ class MirrorStrings extends WidgetBase {
                 },
                 callback: (objs: mendix.lib.MxObject) => {
                     if (cb && typeof cb === "function") {
-                        // cb(objs);
+                        cb(objs);
                     }
                 },
                 error: (error) => {
