@@ -2,6 +2,7 @@ import * as dojoDeclare from "dojo/_base/declare";
 import * as domConstruct from "dojo/dom-construct";
 import * as WidgetBase from "mxui/widget/_WidgetBase";
 import * as dojoClass from "dojo/dom-class";
+import * as dojoStyle from "dojo/dom-style";
 
 class MirrorStrings extends WidgetBase {
 
@@ -30,26 +31,30 @@ class MirrorStrings extends WidgetBase {
     }
 
     uninitialise(): boolean {
+        console.log("uninitialise")
+        domConstruct.destroy(this.domNode);
         return true;
     }
 
     private setupEvents() {
         if (this.mfToExecute !== "") {
-            // this.execMf(this.mfToExecute, this.contextObj.getGuid());
+            // this.execMf(this.mfToExecute, this.contextObj.getGuid(), this.callb);
         }
     }
 
     private TextInput() {
         domConstruct.create("input", {
             class: "form-control",
-            type: "text",
-            value: "Place Some text here"
+            type: "Place Some text here",
+            value: ""
         }, this.domNode).addEventListener("mouseleave", () => {
             // this.setupEvents();
         });
 
-        domConstruct.create("span", {
-            value: this.reverseString("sam")
+        domConstruct.create("input", {
+            class: "form-control",
+            type: "text",
+            value: this.reverseString(this.msg)
         }, this.domNode);
 
         domConstruct.create("input", {
@@ -66,40 +71,38 @@ class MirrorStrings extends WidgetBase {
     }
 
     private createTag() {
-        // let dataatttr = this.dataAttribute
-        // let txtstr = this.textString
         mx.data.create({
             entity: this.reverseEntity,
-            callback: this.saveTag,
-            // function (obj: mendix.lib.MxObject) {
-            //     obj.set(dataatttr, txtstr)
-            //     this.saveTag(obj)
-            //     console.log("Object created on server");
-            // }.bind(this as any),
-            error: function (e) {
+            callback: (obj: mendix.lib.MxObject) => {
+                obj.set(this.dataAttribute, this.textString);
+                this.saveTag(obj);
+                console.log("Object created on server");
+            },
+            error: (e) => {
                 console.error("Could not commit object:", e);
             }
         });
     }
 
     private saveTag(object: mendix.lib.MxObject) {
-        object.set(this.dataAttribute, this.textString);
-
         mx.data.commit({
             mxobj: object,
-            callback: function () {
+            callback: () => {
                 console.log("Object committed");
             },
-            error: function (e) {
+            error: (e) => {
                 console.error("Could not commit object:", e);
             }
         });
     }
 
     private updateRendering() {
-        if (this.contextObj !== null) {
+        if (this.contextObj) {
+            dojoStyle.set(this.domNode, "hidden");
             this.msg = this.contextObj.get(this.dataAttribute) as string;
             this.TextInput();
+        } else {
+            dojoStyle.set(this.domNode, "hidden");
         }
     }
 
@@ -109,14 +112,14 @@ class MirrorStrings extends WidgetBase {
             mx.ui.action(mf, {
                 params: {
                     applyto: "selection",
-                    guids: [guid]
+                    guids: [ guid ]
                 },
-                callback: (function (objs: mendix.lib.MxObject) {
+                callback: (objs: mendix.lib.MxObject) => {
                     if (cb && typeof cb === "function") {
                         // cb(objs);
                     }
-                }.bind(this)),
-                error: function (error) {
+                },
+                error: (error) => {
                     mx.ui.error("Error executing microflow " + mf + " : " + error.message);
                 }
             }, this);
