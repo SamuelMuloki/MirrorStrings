@@ -1,4 +1,4 @@
-# Mendix Croppie widget
+# Mendix MirrorStrings widget
 
 ## Description
 A fast and easy to reverse Strings
